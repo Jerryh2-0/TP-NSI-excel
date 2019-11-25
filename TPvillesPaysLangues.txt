@@ -1,0 +1,28 @@
+Pour les Villes
+
+
+id     NomVille        CodePays   Etat           Nbrha
+
+1	Kabul	        AFG	  Kabol	         1780000
+2	Qandahar        AFG	  Qandahar	 237500
+3	Herat	        AFG	  Herat	         186800
+4	Mazar-e-Sharif	AFG	  Balkh	         127800
+5	Amsterdam	NLD	  Noord-Holland  731200
+6	Rotterdam	NLD	  Zuid-Holland	 593321
+
+
+Pour les Pays
+
+CodePays  Nom         Continent  Region                          Aire         AnnInd      Pop          EspVie    GNP       GNPancien    Nom local                  formgouv              chefetat     idcap    Code2
+                                                                                                                                                                                                                                                                                                                                                                      
+AFG	Afghanistan	Asia	Southern and Central Asia	652090.00	1919	22720000	45.9	5976.00	   NULL	        Afganistan/Afqanestan	Islamic Emirate	        Mohammad Omar	1	AF
+NLD	Netherlands	Europe	Western Europe	                41526.00        1581	15864000	78.3	371362.00  360478.00	Nederland	        Constitutional Monarchy	 Beatrix	5	NL
+
+
+Pour les Langues
+ 
+CodePays  Langue       Officielle (True False)  Pourcentage
+
+AFG	  Pashto	   T	                52.4
+NLD	  Dutch	           T	                95.6
+ANT	  Papiamento	   T	                86.2
