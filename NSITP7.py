@@ -113,13 +113,16 @@ def join(Table,colonne_A,colonne_B):#on ne prend que les lignes de Table qui ont
 
 
 def exo1(tableVilles,lettres): ##On renvoie la liste des villes dont le nom commence par lettres
-    tableProjection=projection_table((tableVilles,0,len(tableVilles)),1) ## On déclare tableProjection comme une table des noms de villes
+    tableProjection=projection_table((tableVilles,0,len(tableVilles)),1) ## On déclare tableProjection comme une table des noms de ville
+    """
     newTable=[] ## On crée une nouvelle liste
     for i in range(len(tableProjection)): ## Pour i allant de 0 à la longueur de tableProjection-1
         if str.upper(tableProjection[i][0][0:len(lettres)])==lettres: ## Si les premieres lettres de l'element i majuscules sont equivalentes a lettres
             newTable.append(tableProjection[i],) ## On ajoute le nom de la ville
     return newTable ## On retourne la liste des noms des villes qui commencent par lettres
-
+    """
+    newTable = [tableProjection[i] for i in range(len(tableProjection)) if tableProjection[i][0][0:len(lettres)].upper() == lettres]
+    return(newTable) ## On retourne la liste des noms des villes qui commencent par lettres
 #afficher_table(exo1(tableVilles,'PA'),0,10)
 #print(len(exo1(tableVilles,'PA')))
 
@@ -129,15 +132,18 @@ def exo1(tableVilles,lettres): ##On renvoie la liste des villes dont le nom comm
 
 def exo2(tablePays): ## On veut relever tout les pays d'Amerique du sud
     tableProjection=projection_table((tablePays,0,len(tablePays)),1,2) ## On récupère les colonnes pays et continent du tablePays
-    
+    """
     newTable=[]
     for i in range(len(tableProjection)):
         if tableProjection[i][1]=="South America": ## Pour chaque pays, si le continent et South America, on l'append dans newTable
             newTable.append((tableProjection[i][0],))
+    """
+    newTable = [tableProjection[i] for i in range(len(tableProjection)) if tableProjection[i][1] == "South America"]
+    
     return newTable ## On retourne newTable, qui contient à présent tout les pays de South America
     
-#afficher_table(exo2(tablePays),0,10)
-
+afficher_table(exo2(tablePays),0,10)
+print(len(exo2(tablePays)))
 
 ################################################################################
 
@@ -162,7 +168,7 @@ def exo3(tableVilles,tablePays):
     T7=projection_table((T6,0,len(T6)),0)
     return T7
 
-afficher_table(exo3(tableVilles,tablePays),0,10)
+#afficher_table(exo3(tableVilles,tablePays),0,10)
 # print(len(exo3(tableVilles,tablePays)))                     
 
 
@@ -202,12 +208,12 @@ def exo5_6(colonne):
     T2 = list(set(T1)) ## On utilise un set puisqu'il ne peut contenir qu'une fois chaque valeur
     return(T2)
 
-print(len(exo5_6(11)))
+#print(len(exo5_6(11)))
 
 
 ################################################################################
 
-print(len(exo5_6(1)))
+#print(len(exo5_6(1)))
 
 
 
