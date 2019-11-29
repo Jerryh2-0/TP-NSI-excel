@@ -142,8 +142,8 @@ def exo2(tablePays): ## On veut relever tout les pays d'Amerique du sud
     
     return newTable ## On retourne newTable, qui contient à présent tout les pays de South America
     
-afficher_table(exo2(tablePays),0,10)
-print(len(exo2(tablePays)))
+# afficher_table(exo2(tablePays),0,10)
+# print(len(exo2(tablePays)))
 
 ################################################################################
 
@@ -196,8 +196,8 @@ def exo4(tableVilles,tablePays):
     T7=projection_table((T6,0,len(T6)),0)
     return T7
 
-#afficher_table(exo4(tableVilles,tablePays),0,10)
-#print(len(exo4(tableVilles,tablePays))) 
+# afficher_table(exo4(tableVilles,tablePays),0,10)
+# print(len(exo4(tableVilles,tablePays))) 
 
 
 ################################################################################
@@ -208,16 +208,109 @@ def exo5_6(colonne):
     T2 = list(set(T1)) ## On utilise un set puisqu'il ne peut contenir qu'une fois chaque valeur
     return(T2)
 
-#print(len(exo5_6(11)))
+# print(len(exo5_6(11)))
 
 
 ################################################################################
 
-#print(len(exo5_6(1)))
+# print(len(exo5_6(1)))
 
 
+def exo7():
+    T1 = projection_table((tablePays, 0, len(tablePays)), 0, 1)
+    T3 = projection_table((tableLangues, 0, len(tableLangues)), 0, 1)
+    T4 = list(filter(lambda elt : elt[1] == "French", T3))
+    T5 = produit_cartesien(T1, T4)
+    T6 = join(T5, 0, 2)
+    T7 = projection_table((T6, 0, len(T6)), 1)
+    return(T7)
 
+# afficher_table((exo7()), 0, 10)
+# print(len(exo7()))
 
-
-
+def exo8():
+    T1 = projection_table((tablePays, 0, len(tablePays)), 0, 1)
+    T3 = projection_table((tableLangues, 0, len(tableLangues)), 0, 1, 2)
+    T4 = list(filter(lambda elt : elt[1] == "French" and elt[2] == "T", T3))
+    T5 = produit_cartesien(T1, T4)
+    T6 = join(T5, 0, 2)
+    T7 = projection_table((T6, 0, len(T6)), 1)
+    return T7
                                                
+# afficher_table((exo8()), 0, 10)
+# print(len(exo8()))
+
+def exo9():
+    T1 = projection_table((tableVilles, 0, len(tableVilles)), 1, 2, 4)
+    T2 = list(filter(lambda elt : int(elt[2]) < 100000, T1))
+    T3 = projection_table((tablePays, 0, len(tablePays)), 0, 2)
+    T4 = list(filter(lambda elt : elt[1] == "Africa", T3))
+    T5 = produit_cartesien(T2, T4)
+    T6 = join(T5, 1, 3)
+    T7 = projection_table((T6, 0, len(T6)), 0, 1)
+    T8 = projection_table((tableLangues, 0, len(tableLangues)), 0, 1, 2)
+    T9 = list(filter(lambda elt : elt[1] == "French" and elt[2] == "T", T8))
+    T10 = produit_cartesien(T7, T9)
+    T11 = join(T10, 1, 2)
+    T12 = projection_table((T11, 0, len(T11)), 0)
+    return T12
+
+# afficher_table((exo9()), 0, 10)
+# print(len(exo9()))
+
+
+def exo10():
+    T1 = projection_table((tablePays, 0, len(tablePays)), 1, 3, 6, 11)
+    T3 = list(filter(lambda elt : elt[1] == "South America" and int(elt[2]) > 10000000 and elt[3] == "Republic", T1))
+    T4 = projection_table((T3, 0, len(T3)), 0)
+    return T4
+
+# afficher_table((exo10()), 0, 10)
+# print(len(exo10()))
+
+def exo11():
+    T1 = projection_table((tableVilles, 0, len(tableVilles)), 1, 2, 4)
+    T2 = list(filter(lambda elt : int(elt[2]) > 100000, T1))
+    T3 = projection_table((tablePays, 0, len(tablePays)), 0, 2)
+    T4 = list(filter(lambda elt : elt[1] == "North America", T3))
+    T5 = produit_cartesien(T2, T4)
+    T6 = join(T5, 1, 3)
+    T7 = projection_table((T6, 0, len(T6)), 0, 1)
+    T8 = projection_table((tableLangues, 0, len(tableLangues)), 0, 1)
+    T9 = list(filter(lambda elt : elt[1] == "Spanish", T8))
+    T10 = produit_cartesien(T7, T9)
+    T11 = join(T10, 1, 2)
+    T12 = projection_table((T11, 0, len(T11)), 0)
+    return T12
+
+# afficher_table((exo11()), 0, 10)
+# print(len(exo11()))
+
+def exo12():
+    T1 = projection_table((tablePays, 0, len(tablePays)), 2, 4)
+    T2 = list(filter(lambda elt : elt[0] == "Europe", T1))
+    totalArea = 0
+    for elt in T2:
+        totalArea += float(elt[1])
+    return(totalArea)
+
+# print(f'{exo12()} à 0.1 près')
+
+def exo13():
+    T1 = projection_table((tablePays, 0, len(tablePays)), 3, 4)
+    T2 = list(filter(lambda elt : elt[0] == "Polynesia", T1))
+    totalArea = 0
+    for elt in T2:
+        totalArea += float(elt[1])
+    return(totalArea)
+
+# print(f'{exo13()} à 0.1 près')
+
+def exo14():
+    T1 = projection_table((tablePays, 0, len(tablePays)), 2, 4)
+    T2 = list(filter(lambda elt : elt[0] == "Oceania" and float(elt[1])>10000, T1))
+    count = 0
+    for elt in T2: count += 1
+    return(count)
+
+print(exo14())
