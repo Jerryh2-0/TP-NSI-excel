@@ -110,65 +110,67 @@ def join(Table,colonne_A,colonne_B):#on ne prend que les lignes de Table qui ont
 
 
 
+## Définition des erreurs
+
+class MustBeAnOperator(Exception):
+    def __init__(self):
+        pass
+
+## Fonctions réutilisables
+
+def condition(table, *args): ## On définit une fonction nommée condition qui va nous permettre de trier un tableau en gardant les lignes qui respectent les conditions voulues. Les conditions sont des tuples constituées de trois éléments, la colonne, l'opérateur conditionnel, la valeur testée et le type de variable (int ou str)
+    ##avec args une liste de tuples de longueurs 4 sous la forme (colonne, operateur, valeur)
+    for condition in args:
+        print(condition)
+        afficher_table(table, 0, 10)
+        if condition[1]=="==": table = list(filter(lambda elt : elt == condition[2] , (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
+        elif condition[1]==">=": table = list(filter(lambda elt : elt >= condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
+        elif condition[1]=="<=": table = list(filter(lambda elt : elt <= condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
+        elif condition[1]==">": table = list(filter(lambda elt : elt > condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
+        elif condition[1]=="<": table = list(filter(lambda elt : elt < condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
+        else: raise MustBeAnOperator('The second argument of the tuples must be a conditional operator')
+        afficher_table(table, 0, 10)
+    return table
 
 
-def exo1(tableVilles,lettres): ##On renvoie la liste des villes dont le nom commence par lettres
-    tableProjection=projection_table((tableVilles,0,len(tableVilles)),1) ## On déclare tableProjection comme une table des noms de ville
-    """
-    newTable=[] ## On crée une nouvelle liste
-    for i in range(len(tableProjection)): ## Pour i allant de 0 à la longueur de tableProjection-1
-        if str.upper(tableProjection[i][0][0:len(lettres)])==lettres: ## Si les premieres lettres de l'element i majuscules sont equivalentes a lettres
-            newTable.append(tableProjection[i],) ## On ajoute le nom de la ville
-    return newTable ## On retourne la liste des noms des villes qui commencent par lettres
-    """
-    newTable = [tableProjection[i] for i in range(len(tableProjection)) if tableProjection[i][0][0:len(lettres)].upper() == lettres]
+################################################################################
+
+
+def exo1(tableVilles, lettres, proj): ##On renvoie la liste des villes dont le nom commence par lettres
+    tableProjection = projection_table((tableVilles,0,len(tableVilles)),1) if proj==1 else tableVilles ## On déclare tableProjection comme une table des noms de ville si on veut faire une projection, sinon, on donne comme valeur la table des Villes données en argument
+    newTable = [elt for elt in tableProjection if elt[0][0:len(lettres)].upper() == lettres] ## On récupère dans newTable les villes dont le nom commence par lettres
     return(newTable) ## On retourne la liste des noms des villes qui commencent par lettres
-#afficher_table(exo1(tableVilles,'PA'),0,10)
-#print(len(exo1(tableVilles,'PA')))
+
+# afficher_table(exo1(tableVilles,'PA', 1),0,10)
+# print(len(exo1(tableVilles,'PA', 1)))
+
 
 ################################################################################
 
 
+def exo2(tablePays, continent, proj): ## On veut relever tout les pays d'Amerique du sud, on donne l'argument continent qui sera un string, ainsi cette fonction pourra fonctionner pour tout continent
+    tableProjection = projection_table((tablePays,0,len(tablePays)),1,2) if proj==1 else tablePays ## On récupère les colonnes pays et continent du tablePays si proj est 1 sinon, on y assigne la table demandé en argument de la fonction
+    newTable = [tableProjection[i] for i in range(len(tableProjection)) if tableProjection[i][1] == continent] ## On récupère dans tableProjection les noms des pays se trouvant sur le continant donné en argument
+    return newTable ## On retourne newTable, qui contient à présent tout les pays du continent continent
+    
+# afficher_table(exo2(tablePays, "South America", 1),0,10)
+# print(len(exo2(tablePays, "South America", 1)))
 
-def exo2(tablePays): ## On veut relever tout les pays d'Amerique du sud
-    tableProjection=projection_table((tablePays,0,len(tablePays)),1,2) ## On récupère les colonnes pays et continent du tablePays
-    """
-    newTable=[]
-    for i in range(len(tableProjection)):
-        if tableProjection[i][1]=="South America": ## Pour chaque pays, si le continent et South America, on l'append dans newTable
-            newTable.append((tableProjection[i][0],))
-    """
-    newTable = [tableProjection[i] for i in range(len(tableProjection)) if tableProjection[i][1] == "South America"]
-    
-    return newTable ## On retourne newTable, qui contient à présent tout les pays de South America
-    
-# afficher_table(exo2(tablePays),0,10)
-# print(len(exo2(tablePays)))
 
 ################################################################################
+
 
 def exo3(tableVilles,tablePays):
     T1=projection_table((tableVilles,0,len(tableVilles)),1,2) ## On déclare T1 comme une table contenant toutes les lignes de tableVilles mais seulement les colonnes 1 et 2, c'est-a-dire  le nom de la ville et le code du pays
-    
-    
-    T2=[] ## On déclare T2, une table vide pour l'instant
-    for elt in T1: ## Pour chaque element de T1:
-        if str.upper(elt[0][0:len('PA')])=="PA": ## Si le nom de la ville commence par 'PA'
-            T2.append(elt,) ## On ajoute l'element dans T2
-
+    T2 = exo1(T1, "PA", 0) ## T2 est la table des villes dont le nom commence par "PA"
     T3=projection_table((tablePays,0,len(tablePays)),0,2) ## On recupere la table des pays contenant toutes les lignes mais uniquement les colonnes 0 et 2, c'est-a-dire les codes et les continents
-    T4=[] ## On déclare une nouvelle table  T4
-                     
-    for elt in T3: ## Pour chaque element de T3:
-        if elt[1]=='Europe': ## Si le pays est en Europe:
-            T4.append(elt,) ## On l'ajoute à T4
-                     
-    T5=produit_cartesien(T2,T4) ## On
-    T6=join(T5,1,2)
-    T7=projection_table((T6,0,len(T6)),0)
-    return T7
+    T4=exo2(T3, "Europe", 0) ## On déclare une nouvelle table  T4 qui contient les pays d'Europe    
+    T5=produit_cartesien(T2,T4) ## On fait le produit cartésien des tableaux T2 et T4, permettant de retrouver les villes qui nous intéressent plus tard
+    T6=join(T5,1,2) ## On trie le tableau précédemment obtenu par produit, on garde uniquement les lignes qui ont les mêmes éléments dans les colonne 1 et 2
+    T7=projection_table((T6,0,len(T6)),0) ## On récupère seulement la colonne intéressante du tableau T6 c'est à dire les noms des villes d'Europe commençant par pa
+    return T7 ## On retourne le tableau T7
 
-#afficher_table(exo3(tableVilles,tablePays),0,10)
+# afficher_table(exo3(tableVilles,tablePays),0,10)
 # print(len(exo3(tableVilles,tablePays)))                     
 
 
@@ -177,13 +179,14 @@ def exo3(tableVilles,tablePays):
 
 def exo4(tableVilles,tablePays):
     T1=projection_table((tableVilles,0,len(tableVilles)),1,2,4) ## On déclare T1 comme une table contenant toutes les lignes de tableVilles mais seulement les colonnes 1 et 2, c'est-a-dire  le nom de la ville et le code du pays
-    
-    
+    """
     T2=[] ## On déclare T2, une table vide pour l'instant
     for elt in T1: ## Pour chaque element de T1:
         if int(elt[2]) > 100000: ## Si la ville contient plus de 100000 habitants
             T2.append(elt,) ## On ajoute l'element dans T2
-
+    """
+    afficher_table(T1, 0, 10)
+    T2 = condition(T1, (0, ">", float(100000)))
     T3=projection_table((tablePays,0,len(tablePays)),0,2) ## On recupere la table des pays contenant toutes les lignes mais uniquement les colonnes 0 et 2, c'est-a-dire les codes et les continents
     T4=[] ## On déclare une nouvelle table  T4
                      
@@ -196,8 +199,8 @@ def exo4(tableVilles,tablePays):
     T7=projection_table((T6,0,len(T6)),0)
     return T7
 
-# afficher_table(exo4(tableVilles,tablePays),0,10)
-# print(len(exo4(tableVilles,tablePays))) 
+afficher_table(exo4(tableVilles,tablePays),0,10)
+print(len(exo4(tableVilles,tablePays))) 
 
 
 ################################################################################
@@ -213,7 +216,11 @@ def exo5_6(colonne):
 
 ################################################################################
 
+
 # print(len(exo5_6(1)))
+
+
+################################################################################
 
 
 def exo7():
@@ -228,6 +235,10 @@ def exo7():
 # afficher_table((exo7()), 0, 10)
 # print(len(exo7()))
 
+
+################################################################################
+
+
 def exo8():
     T1 = projection_table((tablePays, 0, len(tablePays)), 0, 1)
     T3 = projection_table((tableLangues, 0, len(tableLangues)), 0, 1, 2)
@@ -239,6 +250,10 @@ def exo8():
                                                
 # afficher_table((exo8()), 0, 10)
 # print(len(exo8()))
+
+
+################################################################################
+
 
 def exo9():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 1, 2, 4)
@@ -259,6 +274,9 @@ def exo9():
 # print(len(exo9()))
 
 
+################################################################################
+
+
 def exo10():
     T1 = projection_table((tablePays, 0, len(tablePays)), 1, 3, 6, 11)
     T3 = list(filter(lambda elt : elt[1] == "South America" and int(elt[2]) > 10000000 and elt[3] == "Republic", T1))
@@ -267,6 +285,10 @@ def exo10():
 
 # afficher_table((exo10()), 0, 10)
 # print(len(exo10()))
+
+
+################################################################################
+
 
 def exo11():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 1, 2, 4)
@@ -286,6 +308,10 @@ def exo11():
 # afficher_table((exo11()), 0, 10)
 # print(len(exo11()))
 
+
+################################################################################
+
+
 def exo12():
     T1 = projection_table((tablePays, 0, len(tablePays)), 2, 4)
     T2 = list(filter(lambda elt : elt[0] == "Europe", T1))
@@ -295,6 +321,10 @@ def exo12():
     return(totalArea)
 
 # print(f'{exo12()} à 0.1 près')
+
+
+################################################################################
+
 
 def exo13():
     T1 = projection_table((tablePays, 0, len(tablePays)), 3, 4)
@@ -306,11 +336,13 @@ def exo13():
 
 # print(f'{exo13()} à 0.1 près')
 
+
+################################################################################
+
+
 def exo14():
     T1 = projection_table((tablePays, 0, len(tablePays)), 2, 4)
     T2 = list(filter(lambda elt : elt[0] == "Oceania" and float(elt[1])>10000, T1))
-    count = 0
-    for elt in T2: count += 1
-    return(count)
+    return(len(T2))
 
-print(exo14())
+# print(exo14())
