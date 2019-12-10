@@ -121,15 +121,23 @@ class MustBeAnOperator(Exception):
 def condition(table, *args): ## On définit une fonction nommée condition qui va nous permettre de trier un tableau en gardant les lignes qui respectent les conditions voulues. Les conditions sont des tuples constituées de trois éléments, la colonne, l'opérateur conditionnel, la valeur testée et le type de variable (int ou str)
     ##avec args une liste de tuples de longueurs 4 sous la forme (colonne, operateur, valeur)
     for condition in args:
-        print(condition)
-        afficher_table(table, 0, 10)
+        # print(condition)
+        # afficher_table(table, 0, 10)
+        """
         if condition[1]=="==": table = list(filter(lambda elt : elt == condition[2] , (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
         elif condition[1]==">=": table = list(filter(lambda elt : elt >= condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
         elif condition[1]=="<=": table = list(filter(lambda elt : elt <= condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
         elif condition[1]==">": table = list(filter(lambda elt : elt > condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
         elif condition[1]=="<": table = list(filter(lambda elt : elt < condition[2], (list(map(lambda elt : float(elt), table[condition[0]])) if (type(condition[2])==float or type(condition[2])==int) else table[condition[0]])))
         else: raise MustBeAnOperator('The second argument of the tuples must be a conditional operator')
-        afficher_table(table, 0, 10)
+        """
+        if condition[1]=="==": table = list(filter(lambda elt : float(elt[condition[0]]) == condition[2] ,  table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] == condition[2] ,  table))
+        elif condition[1]==">=": table = list(filter(lambda elt : float(elt[condition[0]]) >= condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] >= condition[2] ,  table))
+        elif condition[1]=="<=": table = list(filter(lambda elt : float(elt[condition[0]]) <= condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] <= condition[2] ,  table))
+        elif condition[1]==">": table = list(filter(lambda elt : float(elt[condition[0]]) > condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] > condition[2] ,  table))
+        elif condition[1]=="<": table = list(filter(lambda elt : float(elt[condition[0]]) < condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] < condition[2] ,  table))
+        else: raise MustBeAnOperator('The second argument of the tuples must be a conditional operator')
+        # afficher_table(table, 0, 10)
     return table
 
 
@@ -185,15 +193,17 @@ def exo4(tableVilles,tablePays):
         if int(elt[2]) > 100000: ## Si la ville contient plus de 100000 habitants
             T2.append(elt,) ## On ajoute l'element dans T2
     """
-    afficher_table(T1, 0, 10)
-    T2 = condition(T1, (0, ">", float(100000)))
+    # afficher_table(T1, 0, 10)
+    T2 = condition(T1, (2, ">", 100000))
     T3=projection_table((tablePays,0,len(tablePays)),0,2) ## On recupere la table des pays contenant toutes les lignes mais uniquement les colonnes 0 et 2, c'est-a-dire les codes et les continents
+    """
     T4=[] ## On déclare une nouvelle table  T4
                      
     for elt in T3: ## Pour chaque element de T3:
         if elt[1]=='Europe': ## Si le pays est en Europe
             T4.append(elt,) ## On l'ajoute a T4
-                     
+    """
+    T4 = condition(T3, (1, "==", "Europe"))              
     T5=produit_cartesien(T2,T4) ## 
     T6=join(T5,1,3)
     T7=projection_table((T6,0,len(T6)),0)
