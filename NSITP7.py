@@ -449,11 +449,10 @@ def exo_26():
         else:
             sommeParPays[elt[0]] = int(elt[1])
     T2 = projection_table((tablePays, 0, len(tablePays)), 0, 1)
-    T3 = list(filter(lambda elt : sommeParPays[elt[0]] >= 10000, T2))#ATA Error, to check
-    return T3
-"""To check this night"""
+    T3 = list(filter(lambda elt : sommeParPays[elt[0]] >= 10000 if elt[0] in sommeParPays.keys() else False, T2))
+    return projection_table((T3, 0, len(T3)), 1)
 # afficher_table(exo_26(), 0, 10)
-# print(len(exo_26()))
+# print(len(exo_26()))#205
 
 def exo_27():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 1, 2, 7), (1, "==", "Asia"))
