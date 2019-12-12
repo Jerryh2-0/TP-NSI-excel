@@ -7,12 +7,8 @@ import csv ## On importe csv qui permet de lire les fichiers .csv
 def charger_table(nom): ## On définit la fonction charger_table qui prend en argument un string, nom et qui ouvre le fichier qui dispose de ce nom
     csvfile = codecs.open(nom, encoding='utf-8') ## On ouvre le fichier avec un encodage utf-8 grâce à codecs
     lecteurcsv = csv.reader(csvfile,delimiter=';') ## On lit le resultat de l'ouverture du fichier à l'aide de la mathode reader de csv
-
-    tab=[] ## On déclare tab, la variable est un array et va contenir la 'table' comme définie dans l'énoncé (liste de tuples)
-    for ligne in lecteurcsv: ## On lit chaque ligne du fichier csv ouvert
-        tab.append(tuple(ligne)) ## On met les éléments de la ligne dans un tuple
-    return tab ## On renvoie la liste de tuples, la 'table' comme définie dans l'énoncé
-
+    
+    return [tuple(ligne) for ligne in lecteurcsv] ## On renvoie une liste de tuples avec un tuple = une ligne
 tablePays=charger_table("pays.csv") ## On récupère la modélisation de pays.csv et on la stocke dans tablePays
 tableVilles=charger_table("villes.csv") ## On récupère la modalisation de villes.csv et on la stocke dans tableVilles
 tableLangues=charger_table("langues.csv") ## On récupère la modalisation de langues.csv et on la stocke dans tableLangues
@@ -110,9 +106,9 @@ def join(Table,colonne_A,colonne_B):#on ne prend que les lignes de Table qui ont
 
 
 
-## Définition des erreurs
+## Définition d'une erreur
 
-class MustBeAnOperator(Exception):
+class MustBeAnOperator(Exception): ## On créer une classe enfant de Exception qui va donc hériter des propriétés de Exception
     def __init__(self):
         pass
 
@@ -120,13 +116,13 @@ class MustBeAnOperator(Exception):
 
 def condition(table, *args): ## On définit une fonction nommée condition qui va nous permettre de trier un tableau en gardant les lignes qui respectent les conditions voulues. Les conditions sont des tuples constituées de trois éléments, la colonne, l'opérateur conditionnel, la valeur testée et le type de variable (int ou str)
     ##avec args une liste de tuples de longueurs 4 sous la forme (colonne, operateur, valeur)
-    for condition in args:
-        if condition[1]=="==": table = list(filter(lambda elt : float(elt[condition[0]]) == condition[2] ,  table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] == condition[2] ,  table))
-        elif condition[1]=="!=": table = list(filter(lambda elt : float(elt[condition[0]]) != condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] != condition[2] ,  table))
-        elif condition[1]==">=": table = list(filter(lambda elt : float(elt[condition[0]]) >= condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] >= condition[2] ,  table))
-        elif condition[1]=="<=": table = list(filter(lambda elt : float(elt[condition[0]]) <= condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] <= condition[2] ,  table))
-        elif condition[1]==">": table = list(filter(lambda elt : float(elt[condition[0]]) > condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] > condition[2] ,  table))
-        elif condition[1]=="<": table = list(filter(lambda elt : float(elt[condition[0]]) < condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] < condition[2] ,  table))
+    for condition in args: ## Pour chaque condition représenté par un des tuples
+        if condition[1]=="==": table = list(filter(lambda elt : float(elt[condition[0]]) == condition[2] ,  table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] == condition[2] ,  table)) ## On test pour le str si la valeur donné en argument est un string sinon, on transforme en float
+        elif condition[1]=="!=": table = list(filter(lambda elt : float(elt[condition[0]]) != condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] != condition[2] ,  table)) ## On test pour le str si la valeur donné en argument est un string sinon, on transforme en float
+        elif condition[1]==">=": table = list(filter(lambda elt : float(elt[condition[0]]) >= condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] >= condition[2] ,  table)) ## On test pour le str si la valeur donné en argument est un string sinon, on transforme en float
+        elif condition[1]=="<=": table = list(filter(lambda elt : float(elt[condition[0]]) <= condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] <= condition[2] ,  table)) ## On test pour le str si la valeur donné en argument est un string sinon, on transforme en float
+        elif condition[1]==">": table = list(filter(lambda elt : float(elt[condition[0]]) > condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] > condition[2] ,  table)) ## On test pour le str si la valeur donné en argument est un string sinon, on transforme en float
+        elif condition[1]=="<": table = list(filter(lambda elt : float(elt[condition[0]]) < condition[2], table)) if (type(condition[2])==float or type(condition[2])==int) else list(filter(lambda elt : elt[condition[0]] < condition[2] ,  table)) ## On test pour le str si la valeur donné en argument est un string sinon, on transforme en float
         else: raise MustBeAnOperator('The second argument of the tuples must be a conditional operator')
         # afficher_table(table, 0, 10)
     return table
@@ -141,7 +137,7 @@ def exo1(tableVilles, lettres, proj): ##On renvoie la liste des villes dont le n
     return(newTable) ## On retourne la liste des noms des villes qui commencent par lettres
 
 # afficher_table(exo1(tableVilles,'PA', 1),0,10)
-# print(len(exo1(tableVilles,'PA', 1)))
+# print(len(exo1(tableVilles,'PA', 1)))#70
 
 
 ################################################################################
@@ -153,7 +149,7 @@ def exo2(tablePays, continent, proj): ## On veut relever tout les pays d'Ameriqu
     return newTable ## On retourne newTable, qui contient à présent tout les pays du continent continent
     
 # afficher_table(exo2(tablePays, "South America", 1),0,10)
-# print(len(exo2(tablePays, "South America", 1)))
+# print(len(exo2(tablePays, "South America", 1)))#14
 
 
 ################################################################################
@@ -170,7 +166,7 @@ def exo3(tableVilles,tablePays):
     return T7 ## On retourne le tableau T7
 
 # afficher_table(exo3(tableVilles,tablePays),0,10)
-# print(len(exo3(tableVilles,tablePays)))                     
+# print(len(exo3(tableVilles,tablePays)))#11
 
 
 ################################################################################
@@ -187,7 +183,7 @@ def exo4(tableVilles,tablePays): ## On définit la fonction qui va nous retourne
     return T7 ## On retourne les informations demandées dans l'exercice 4
 
 # afficher_table(exo4(tableVilles,tablePays),0,10)
-# print(len(exo4(tableVilles,tablePays))) 
+# print(len(exo4(tableVilles,tablePays)))#711
 
 
 ################################################################################
@@ -197,7 +193,7 @@ def exo5_6(colonne): ## On définit la fonction exo5_6 qui prend simplement une 
     T1 = projection_table((tablePays, 0, len(tablePays)), colonne) ## On projete la table des pays avec uniquement sa colonne precisee en argument
     return list(set(T1)) ## On utilise un set puisqu'il ne peut contenir qu'une fois chaque valeur
 
-# print(len(exo5_6(11)))
+# print(len(exo5_6(11)))#37
 
 
 ################################################################################
@@ -217,7 +213,7 @@ def exo7():
     return(projection_table((T4, 0, len(T4)), 1)) ## On renvoie la liste des noms des pays correspondant
 
 # afficher_table((exo7()), 0, 10)
-# print(len(exo7()))
+# print(len(exo7()))#25
 
 
 ################################################################################
@@ -230,7 +226,7 @@ def exo8():
     return projection_table((T3, 0, len(T3)), 1) ## On renvoie les noms des pays
                                                
 # afficher_table((exo8()), 0, 10)
-# print(len(exo8()))
+# print(len(exo8()))#18
 
 
 ################################################################################
@@ -246,7 +242,7 @@ def exo9():
     return projection_table((T6, 0, len(T6)), 0) ## On renvoie uniquement les villes d'Afrique où la langue officielle est le français
 
 # afficher_table((exo9()), 0, 10)
-# print(len(exo9()))
+# print(len(exo9()))#3
 
 
 ################################################################################
@@ -257,7 +253,7 @@ def exo10():
     return projection_table((T1, 0, len(T1)), 0) ## On renvoie la liste de leurs noms
 
 # afficher_table((exo10()), 0, 10)
-# print(len(exo10()))
+# print(len(exo10()))#4
 
 
 ################################################################################
@@ -273,7 +269,7 @@ def exo11():
     return projection_table((T6, 0, len(T6)), 0) ## On renvoie la liste des noms des villes
 
 # afficher_table((exo11()), 0, 10)
-# print(len(exo11()))
+# print(len(exo11()))#483
 
 
 ################################################################################
@@ -286,7 +282,7 @@ def exo12():
         totalArea += float(elt[1]) ## On ajoute son aire
     return(totalArea) ## On renvoie l'aire de l'Europe
 
-# print(f'{exo12()} à 0.1 près')
+# print(f'{exo12()} à 0.1 près')#23049133.9
 
 
 ################################################################################
@@ -298,7 +294,7 @@ def exo13():
         totalArea += float(elt[1]) ## On ajoute son aire à la variable
     return(totalArea) ## On renvoie l'aire totale de Polynesie
 
-# print(f'{exo13()} à 0.1 près')
+# print(f'{exo13()} à 0.1 près')#8463.0
 
 
 ################################################################################
