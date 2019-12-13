@@ -199,7 +199,7 @@ def exo5_6(colonne): ## On définit la fonction exo5_6 qui prend simplement une 
 ################################################################################
 
 
-# print(len(exo5_6(1)))
+# print(len(exo5_6(1)))#239
 
 
 ################################################################################
@@ -316,7 +316,7 @@ def exo_15():
 
 # afficher_table(exo_15, 0, 10)
 # [print(elt) for elt in exo_15()]
-# print(len(exo_15()))
+# print(len(exo_15()))#10
 
 def exo_16():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 2, 6), (0, "==", "Asia")) ## On recupere la liste des pays d'Asie
@@ -367,52 +367,56 @@ def exo_20():
             numOfOccur[i[0]] += 1
         else:
             numOfOccur[i[0]] = 1
-    T3 = list(filter(lambda elt : numOfOccur[elt[0]]>=49, T1))
+    T3 = list(filter(lambda elt : numOfOccur[elt[0]]>49, T1))
     T4 = condition(projection_table((tableLangues, 0, len(tableLangues)), 0, 1), (1, "==", "Portuguese"))
     T5 = list(filter(lambda elt : (elt[0],) in projection_table((T4, 0, len(T4)), 0), T3))
     return T5
 
 # afficher_table(exo_20(), 0, 10)
-# print(len(exo_20()))
+# print(len(exo_20()))#1
 
 def exo_21():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2, 4)
     paysVillesPasGrandes = []
+    paysAyantVilles = set()
     for elt in T1:
-        if not(int(elt[1])>=100000):
+        if not(int(elt[1])>100000):
             paysVillesPasGrandes.append(elt[0])
-    T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes), projection_table((tablePays, 0, len(tablePays)), 0, 1)))
+        paysAyantVilles.add(elt[0])
+    T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes) and elt[0] in paysAyantVilles, projection_table((tablePays, 0, len(tablePays)), 0, 1)))
     return T2
 
 # afficher_table(exo_21(), 0, 10)
-# print(len(exo_21()))#85
+# print(len(exo_21()))#77
 
 def exo_22():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2, 4)
     T2 = condition(projection_table((tableVilles, 0, len(tableVilles)), 2, 4), (0, "==", "NPL"))
-    nepalVilles = sorted(T2, key=lambda elt : elt[1])
+    nepalVilles = sorted(T2, key=lambda elt : int(elt[1]), reverse=True)
     taille = int(nepalVilles[0][1])
     paysVillesPasGrandes = []
+    paysAyantVilles = set()
     for elt in T1:
-        if not(int(elt[1])>=taille):
+        if int(elt[1]) <= taille:
             paysVillesPasGrandes.append(elt[0])
-    T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes), projection_table((tablePays, 0, len(tablePays)), 0, 1)))
+        paysAyantVilles.add(elt[0])
+    T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes) and elt[0] in paysAyantVilles, projection_table((tablePays, 0, len(tablePays)), 0, 1)))
     return T2
 
 # afficher_table(exo_22(), 0, 10)
-# print(len(exo_22()))#45
+# print(len(exo_22()))#9
 
 def exo_23():
     T1 = condition(projection_table((tableLangues, 0, len(tableLangues)), 0, 1), (1, "==", "French"))
     paysFrancophones = projection_table((T1, 0, len(T1)), 0)
     T2 = condition(projection_table((tableLangues, 0, len(tableLangues)), 0, 1), (1, "==", "English"))
-    paysAnglophone = projection_table((T2, 0, len(T2)), 0)
-    T3 = list(filter(lambda elt : not(elt in paysAnglophone), paysFrancophones))
+    paysAnglophones = projection_table((T2, 0, len(T2)), 0)
+    T3 = list(filter(lambda elt : not(elt in paysAnglophones), paysFrancophones))
     T4 = list(filter(lambda elt : (elt[0],) in T3, projection_table((tablePays, 0, len(tablePays)), 0, 1)))
     return projection_table((T4, 0, len(T4)), 1)
 
-# afficher_table(exo_23(), 0, 10)
-# print(len(exo_23()))#19
+# afficher_table(exo_23())
+# print(len(exo_23()))#19#20
 
 def exo_24():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2)
@@ -430,11 +434,11 @@ def exo_25():
     T2 = list(set(list(T1)))
     paysAvecLangueDansData = [elt[0] for elt in T2]
     T3 = projection_table((tablePays, 0, len(tablePays)), 0, 1)
-    T4 = list(filter(lambda elt : elt[0] in paysAvecLangueDansData, T3))
+    T4 = list(filter(lambda elt : not(elt[0] in paysAvecLangueDansData), T3))
     return projection_table((T4, 0, len(T4)), 1)
 
 # afficher_table(exo_25(), 0, 10)
-# print(len(exo_25()))#233
+# print(len(exo_25()))#6
 
 def exo_26():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2, 4)
@@ -445,10 +449,10 @@ def exo_26():
         else:
             sommeParPays[elt[0]] = int(elt[1])
     T2 = projection_table((tablePays, 0, len(tablePays)), 0, 1)
-    T3 = list(filter(lambda elt : sommeParPays[elt[0]] >= 10000 if elt[0] in sommeParPays.keys() else False, T2))
+    T3 = list(filter(lambda elt : sommeParPays[elt[0]] >= 10000000 if elt[0] in sommeParPays.keys() else False, T2))
     return projection_table((T3, 0, len(T3)), 1)
 # afficher_table(exo_26(), 0, 10)
-# print(len(exo_26()))#205
+# print(len(exo_26()))#30
 
 def exo_27():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 1, 2, 7), (1, "==", "Asia"))
@@ -466,8 +470,12 @@ def exo_28():
         else:
             nombreLangues[elt[0]] = 1
     T2 = list(filter(lambda elt : nombreLangues[elt[0]]>=3, T1))
-    T3 = list(filter(lambda elt : (elt[0],) in T2, projection_table((tablePays, 0, len(tablePays)), 0, 1)))
-    return projection_table((T3, 0, len(T3)), 1)
+    paysAmerique = condition(projection_table((tablePays, 0, len(tablePays)), 1, 2, 7), (1, "==", "South America"), (2, "!=", "NULL"))
+    paysAmerique = sorted(paysAmerique, key=lambda elt : float(elt[2]), reverse=True)
+    esperanceMax = paysAmerique[0][2]
+    T3 = list(filter(lambda elt : (elt[0],) in T2  and (elt[1],) in exo8(), projection_table((tablePays, 0, len(tablePays)), 0, 1, 7)))
+    T4 = list(filter(lambda elt : (elt[1],) in projection_table((T3, 0, len(T3)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2)))
+    return projection_table((T4, 0, len(T4)), 1)
 
 # afficher_table(exo_28(), 0, 10)
-# print(len(exo_28()))#149
+# print(len(exo_28()))#113#+100
