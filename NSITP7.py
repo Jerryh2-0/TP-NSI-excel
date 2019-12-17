@@ -413,10 +413,11 @@ def exo_23():
     paysAnglophones = projection_table((T2, 0, len(T2)), 0)
     T3 = list(filter(lambda elt : not(elt in paysAnglophones), paysFrancophones))
     T4 = list(filter(lambda elt : (elt[0],) in T3, projection_table((tablePays, 0, len(tablePays)), 0, 1)))
-    return projection_table((T4, 0, len(T4)), 1)
+    return T3
+    # return projection_table((T4, 0, len(T4)), 1)
 
-# afficher_table(exo_23())
-# print(len(exo_23()))#19#20
+afficher_table(exo_23())
+print(len(exo_23()))#19#20
 
 def exo_24():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2)
@@ -465,17 +466,16 @@ def exo_28():
     T1 = projection_table((tableLangues, 0, len(tableLangues)), 0)
     nombreLangues = {}
     for elt in T1:
-        if elt[0] in nombreLangues.keys():
-            nombreLangues[elt[0]] += 1
-        else:
-            nombreLangues[elt[0]] = 1
-    T2 = list(filter(lambda elt : nombreLangues[elt[0]]>=3, T1))
+        if elt[0] in nombreLangues.keys(): nombreLangues[elt[0]] += 1
+        else: nombreLangues[elt[0]] = 1
+    T2 = list(filter(lambda elt : nombreLangues[elt[0]] >= 3, T1))
     paysAmerique = condition(projection_table((tablePays, 0, len(tablePays)), 1, 2, 7), (1, "==", "South America"), (2, "!=", "NULL"))
     paysAmerique = sorted(paysAmerique, key=lambda elt : float(elt[2]), reverse=True)
     esperanceMax = paysAmerique[0][2]
-    T3 = list(filter(lambda elt : (elt[0],) in T2  and (elt[1],) in exo8(), projection_table((tablePays, 0, len(tablePays)), 0, 1, 7)))
-    T4 = list(filter(lambda elt : (elt[1],) in projection_table((T3, 0, len(T3)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2)))
-    return projection_table((T4, 0, len(T4)), 1)
+    T3 = condition(projection_table((tablePays, 0, len(tablePays)), 0, 1, 7), (2, ">=", esperanceMax))
+    T4 = list(filter(lambda elt : (elt[0],) in T2  and (elt[1],) in exo8(), T3))
+    T5 = list(filter(lambda elt : (elt[1],) in projection_table((T4, 0, len(T4)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2)))
+    return projection_table((T5, 0, len(T5)), 0)
 
 # afficher_table(exo_28(), 0, 10)
-# print(len(exo_28()))#113#+100
+# print(len(exo_28()))#106#+100
