@@ -307,27 +307,26 @@ def exo14():
 
 #########################################################################################################
 
-def exo_15():
+def exo15():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 0, 3), (1, "==", "Eastern Europe")) ## On recupere la liste des pays d'Europe de l'Est
     T2 = projection_table((T1, 0, len(T1)), 0) ## On ne garde que les noms de ces pays
     T3 = list(filter(lambda elt: (elt[0],) in T2 and elt[2] == "T", projection_table((tableLangues, 0, len(tableLangues)), 0, 1, 2))) ## On recupere la liste des langues officielles d'Europe de l'Est
     T4 = list(set(projection_table((T3, 0, len(T3)), 1))) ## On ne garde que les noms des langues et on supprime les doublons
     return T4 ## On renvoie la liste de ces noms
 
-# afficher_table(exo_15, 0, 10)
-# [print(elt) for elt in exo_15()]
-# print(len(exo_15()))#10
+# afficher_table(exo15(), 0, 10)
+# print(len(exo15()))#10
 
-def exo_16():
+def exo16():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 2, 6), (0, "==", "Asia")) ## On recupere la liste des pays d'Asie
     totalPop = 0 ## On declare totalPop comme population totale en Asie
     for elt in T1: ## Pour chaque element de T1
         totalPop += int(elt[1]) ## On ajoute le nombre d'habitants
     return totalPop/len(T1) ## On renvoie la moyenne d'habitants
 
-# print(exo_16())#72 647 562.74509804
+# print(exo16())#72 647 562.74509804
 
-def exo_17():
+def exo17():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 0, 2), (1, "==", "Asia")) ## On recupere le code et le continent et on ne conserve que les pays
     T2 = projection_table((T1, 0, len(T1)), 0) ## On ne garde que les codes des pays
     T3 = list(filter(lambda elt: (elt[0], ) in T2, projection_table((tableVilles, 0, len(tableVilles)), 2, 4))) ## On recupere la liste des villes de ces pays
@@ -336,29 +335,29 @@ def exo_17():
         totalPop += int(elt[0]) ## On ajoute la population de la ville à totalPop
     return totalPop/len(T3) ## On renvoie la moyenne
 
-# print(exo_17())#395 019
+# print(exo17())#395 019
 
-def exo_18():
+def exo18():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 2, 13), (0, "==", "Europe")) ## On recupere les pays d'Europe et on ne conserve que les capitales et les continents
     T2 = projection_table((T1, 0, len(T1)), 1) ## On ne conserve que les capitales
     T3 = list(filter(lambda elt: (elt[0],) in T2 , projection_table((tableVilles, 0, len(tableVilles)), 0, 1))) ## On recupere les noms de villes correspondants aux codes
     T4 = sorted(projection_table((T3, 0, len(T3)), 1), key=lambda elt : elt[0]) ## On trie par ordre alphabetique
     return T4 ## On renvoie la liste des capitales d'Europe classées par ordre alphabetique
 
-# afficher_table(exo_18(), 0, 10)
-# print(len(exo_18()))#46
+# afficher_table(exo18(), 0, 10)
+# print(len(exo18()))#46
 
-def exo_19():
+def exo19():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 0, 2, 13), (1, "==", "Africa")) ## On recupere les codes, les continents et le numero de la capitale des pays et on ne conserve que les pays d'Afrique
     T2 = condition(projection_table((tableVilles, 0, len(tableVilles)), 0, 4), (1, ">=", 3000000)) ## On recupere les codes et les populations des pays et on ne garde que les villes de plus de 3 millions d'habitants
     T3 = list(filter(lambda elt : (elt[1],) in projection_table((T2, 0, len(T2)), 0), projection_table((T1, 0, len(T1)), 0, 2))) ## On ne conserve que les pays dont la capitale a plus de 3 millions d'habitants
     T4 = list(filter(lambda elt : (elt[1],) in projection_table((T3, 0, len(T3)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2))) ## On recupere les villes de ces pays
     return T4 ## On renvoie la liste des villes des pays d'Afrique dont la capitale a plus de 3 millions d'habitants
 
-# afficher_table(exo_19(), 0, 10)
-# print(len(exo_19()))#37
+# afficher_table(exo19(), 0, 10)
+# print(len(exo19()))#37
 
-def exo_20():
+def exo20():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 0, 2, 5), (1, "==", "North America"), (2, "!=", "NULL"), (2, "<", 1912)) ## On recupere la liste des pays d'Amerique du Nord ayant acquis l'independance avant 1912
     T2 = list(filter(lambda elt : (elt[0],) in projection_table((T1, 0, len(T1)), 0), projection_table((tableVilles, 0, len(tableVilles)), 2))) ## On recupere les villes de ces pays
     numOfOccur = {} ## Soit numOfOccur le nombre de villes pour chaque pays de T1
@@ -372,10 +371,10 @@ def exo_20():
     T5 = list(filter(lambda elt : (elt[0],) in projection_table((T4, 0, len(T4)), 0), T3)) ## On ne garde que les pays de T3 où le portuguais est parle
     return T5 ## On renvoie la liste des pays d'Amerique du Nord pour lesquelles plus de 49 villes sont enregistrees et ou le portuguais est parlee
 
-# afficher_table(exo_20(), 0, 10)
-# print(len(exo_20()))#1
+# afficher_table(exo20(), 0, 10)
+# print(len(exo20()))#1
 
-def exo_21():
+def exo21():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2, 4) ## On recupere les noms et les populations des villes
     paysVillesPasGrandes = [] ## On declare paysVillesPasGrandes comme la liste des pays dont toutes les villes n'ont pas plus de 100 000 habitants
     paysAyantVilles = set() ## On declare paysAyantVilles comme le set contenant la liste des pays ayant des villes senregistrees dans la base de donnees
@@ -386,10 +385,10 @@ def exo_21():
     T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes) and elt[0] in paysAyantVilles, projection_table((tablePays, 0, len(tablePays)), 0, 1))) ## On ne garde que les pays qui ont des villes enregistrees dans la base de donnes et dont toutes les villes possedent plus de 100 000 habitants
     return T2 ## On renvoie la table des pays dont toutes les villes ont plus de 100 000 habitants
 
-# afficher_table(exo_21(), 0, 10)
-# print(len(exo_21()))#77
+# afficher_table(exo21(), 0, 10)
+# print(len(exo21()))#77
 
-def exo_22():
+def exo22():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2, 4) ## On recupere la liste des codes et des populations des villes
     T2 = condition(projection_table((tableVilles, 0, len(tableVilles)), 2, 4), (0, "==", "NPL")) ## On recupere la liste des codes et populations des villes du Nepal
     nepalVilles = sorted(T2, key=lambda elt : int(elt[1]), reverse=True) ## On classe les villes par ordre décroissant des populations
@@ -403,10 +402,10 @@ def exo_22():
     T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes) and elt[0] in paysAyantVilles, projection_table((tablePays, 0, len(tablePays)), 0, 1))) ## On ne garde que les pays ayant des villes dans la base de donnees et pour lesquels toutes les villes ont une population superieure à celle de la ville la plus peuplee du Nepal
     return T2 ## On renvoie la liste des pays dont toutes les villes ont une population superieure à celle de la ville la plus peuplee du Nepal
 
-# afficher_table(exo_22(), 0, 10)
-# print(len(exo_22()))#9
+# afficher_table(exo22(), 0, 10)
+# print(len(exo22()))#9
 
-def exo_23():
+def exo23():
     T1 = condition(projection_table((tableLangues, 0, len(tableLangues)), 0, 1), (1, "==", "French")) ## On recupere les pays ou le français est parle
     paysFrancophones = projection_table((T1, 0, len(T1)), 0) ## On ne garde que les codes pays
     T2 = condition(projection_table((tableLangues, 0, len(tableLangues)), 0, 1), (1, "==", "English")) ## On recupere les pays ou l'anglais est parle
@@ -415,10 +414,10 @@ def exo_23():
     T4 = list(filter(lambda elt : (elt[0],) in T3, projection_table((tablePays, 0, len(tablePays)), 0, 1))) ## On recupere les noms correspondants aux codes pays
     return projection_table((T4, 0, len(T4)), 1) ## On revoie la liste des noms des pays ou le français est parle mais pas l'anglais
 
-# afficher_table(exo_23())
-# print(len(exo_23()))#19#20
+# afficher_table(exo23())
+# print(len(exo23()))#19#20
 
-def exo_24():
+def exo24():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2) ## On recupere la liste des codes pays des villes
     T2 = list(set(list(T1))) ## On recupere un set de ces villes
     paysAvecVilleDansData = [elt[0] for elt in T2] ## On declare paysAvecVilleDansData comme un iterateur des codes pays des pays ayant au moins une ville dans la base de donnees
@@ -426,10 +425,10 @@ def exo_24():
     T4 = list(filter(lambda elt : elt[0] in paysAvecVilleDansData, T3)) ## On ne conserve que les pays de T3 qui possede au moins 1 ville dans la base de donnes
     return projection_table((T4, 0, len(T4)), 1) ## On renvoie uniquement les noms des pays possedant au moins une ville dans la base de donnees
 
-# afficher_table(exo_24(), 0, 10)
-# print(len(exo_24()))#232
+# afficher_table(exo24(), 0, 10)
+# print(len(exo24()))#232
 
-def exo_25():
+def exo25():
     T1 = projection_table((tableLangues, 0, len(tableLangues)), 0) ## On recupere la liste des codes pays des langues
     T2 = list(set(list(T1))) ## On transforme cette liste en set afin de ne pas avoir de doublons
     paysAvecLangueDansData = [elt[0] for elt in T2] ## On cree un iterateur des codes pays de T2
@@ -437,10 +436,10 @@ def exo_25():
     T4 = list(filter(lambda elt : not(elt[0] in paysAvecLangueDansData), T3)) ## On ne garde que les pays dont au moins une langue a ete renseignee dans la base de donnees
     return projection_table((T4, 0, len(T4)), 1) ## On renvoie la liste des pays dont au moins une langue est renseignee dans la base de donnees
 
-# afficher_table(exo_25(), 0, 10)
-# print(len(exo_25()))#6
+# afficher_table(exo25(), 0, 10)
+# print(len(exo25()))#6
 
-def exo_26():
+def exo26():
     T1 = projection_table((tableVilles, 0, len(tableVilles)), 2, 4) ## On recupere la liste des villes avec leurs noms et leurs populations
     sommeParPays = {} ## On declare sommeParPays qui prend comme clef le code pays et qui a comme valeur la population totale des villes du pays
     for elt in T1: ## Pour chaque element de T1
@@ -451,17 +450,17 @@ def exo_26():
     T2 = projection_table((tablePays, 0, len(tablePays)), 0, 1) ## On declare T2 comme les codes et les noms des pays
     T3 = list(filter(lambda elt : sommeParPays[elt[0]] >= 10000000 if elt[0] in sommeParPays.keys() else False, T2)) ## On ne garde de T2 que les pays qui ont une population dans les villes de plus de 10 millions d'habitants
     return projection_table((T3, 0, len(T3)), 1) ## On renvoie la liste des pays dont la population de l'ensemble des villes de la base de donnees est superieure à 10 millions
-# afficher_table(exo_26(), 0, 10)
-# print(len(exo_26()))#30
+# afficher_table(exo26(), 0, 10)
+# print(len(exo26()))#30
 
-def exo_27():
+def exo27():
     T1 = condition(projection_table((tablePays, 0, len(tablePays)), 1, 2, 7), (1, "==", "Asia")) ## On recupere les noms, les pays et les continents et on ne garde que les pays d'Asie
     T2 = sorted(T1, key=lambda elt : float(elt[2])) ## On trie par esperance de vie
     return T2[0][0] ## On renvoie l'esperance de vie la plus elevee
 
-# print(exo_27())#Afghanistan
+# print(exo27())#Afghanistan
 
-def exo_28():
+def exo28():
     T1 = projection_table((tableLangues, 0, len(tableLangues)), 0) ## On recupere la liste des langues dont on ne conserve que les code des pays
     nombreLangues = {} ## On declare nombreLangues comme le dictionnaire prenant comme clef le code pays et comme valeur le nombre de langues parlées
     for elt in T1: ## Pour chaque element de la liste
@@ -477,5 +476,5 @@ def exo_28():
     T5 = list(filter(lambda elt : (elt[1],) in projection_table((T4, 0, len(T4)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2))) ## On recupere les villes de ces pays
     return projection_table((T5, 0, len(T5)), 0) ## On renvoie la table des villes
 
-# afficher_table(exo_28(), 0, 10)
-print(len(exo_28()))#106#+100
+# afficher_table(exo28(), 0, 10)
+# print(len(exo28()))#106#+100
