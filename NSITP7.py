@@ -136,8 +136,8 @@ def exo1(tableVilles, lettres, proj): ##On renvoie la liste des villes dont le n
     newTable = [elt for elt in tableProjection if elt[0][0:len(lettres)].upper() == lettres] ## On récupère dans newTable les villes dont le nom commence par lettres
     return(newTable) ## On retourne la liste des noms des villes qui commencent par lettres
 
-# afficher_table(exo1(tableVilles,'PA', 1),0,10)
-# print(len(exo1(tableVilles,'PA', 1)))#70
+afficher_table(exo1(tableVilles,'PA', 1),0,10)
+print(len(exo1(tableVilles,'PA', 1)))#70
 
 
 ################################################################################
@@ -403,7 +403,7 @@ def exo_22():
     T2 = list(filter(lambda elt : not(elt[0] in paysVillesPasGrandes) and elt[0] in paysAyantVilles, projection_table((tablePays, 0, len(tablePays)), 0, 1))) ## On ne garde que les pays ayant des villes dans la base de donnees et pour lesquels toutes les villes ont une population superieure à celle de la ville la plus peuplee du Nepal
     return T2 ## On renvoie la liste des pays dont toutes les villes ont une population superieure à celle de la ville la plus peuplee du Nepal
 
-# afficher_table(exo_22(), 0, 10)
+afficher_table(exo_22(), 0, 10)
 # print(len(exo_22()))#9
 
 def exo_23():
@@ -478,4 +478,4 @@ def exo_28():
     return projection_table((T5, 0, len(T5)), 0) ## On renvoie la table des villes
 
 # afficher_table(exo_28(), 0, 10)
-print(len(exo_28()))#106#+100
+# print(len(exo_28()))#106#+100
