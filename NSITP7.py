@@ -352,7 +352,7 @@ def exo19():
     T2 = condition(projection_table((tableVilles, 0, len(tableVilles)), 0, 4), (1, ">=", 3000000)) ## On recupere les codes et les populations des pays et on ne garde que les villes de plus de 3 millions d'habitants
     T3 = list(filter(lambda elt : (elt[1],) in projection_table((T2, 0, len(T2)), 0), projection_table((T1, 0, len(T1)), 0, 2))) ## On ne conserve que les pays dont la capitale a plus de 3 millions d'habitants
     T4 = list(filter(lambda elt : (elt[1],) in projection_table((T3, 0, len(T3)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2))) ## On recupere les villes de ces pays
-    return T4 ## On renvoie la liste des villes des pays d'Afrique dont la capitale a plus de 3 millions d'habitants
+    return projection_table((T4, 0, len(T4)), 0) ## On renvoie la liste des villes des pays d'Afrique dont la capitale a plus de 3 millions d'habitants
 
 # afficher_table(exo19(), 0, 10)
 # print(len(exo19()))#37
@@ -414,7 +414,7 @@ def exo23():
     T4 = list(filter(lambda elt : (elt[0],) in T3, projection_table((tablePays, 0, len(tablePays)), 0, 1))) ## On recupere les noms correspondants aux codes pays
     return projection_table((T4, 0, len(T4)), 1) ## On revoie la liste des noms des pays ou le français est parle mais pas l'anglais
 
-# afficher_table(exo23())
+# afficher_table(exo23(), 0, 10)
 # print(len(exo23()))#19#20
 
 def exo24():
