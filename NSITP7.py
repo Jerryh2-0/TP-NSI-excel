@@ -136,8 +136,8 @@ def exo1(tableVilles, lettres, proj): ##On renvoie la liste des villes dont le n
     newTable = [elt for elt in tableProjection if elt[0][0:len(lettres)].upper() == lettres] ## On récupère dans newTable les villes dont le nom commence par lettres
     return(newTable) ## On retourne la liste des noms des villes qui commencent par lettres
 
-afficher_table(exo1(tableVilles,'PA', 1),0,10)
-print(len(exo1(tableVilles,'PA', 1)))#70
+# afficher_table(exo1(tableVilles,'PA', 1),0,10)
+# print(len(exo1(tableVilles,'PA', 1)))#70
 
 
 ################################################################################
@@ -146,7 +146,7 @@ print(len(exo1(tableVilles,'PA', 1)))#70
 def exo2(tablePays, continent, proj): ## On veut relever tout les pays d'Amerique du sud, on donne l'argument continent qui sera un string, ainsi cette fonction pourra fonctionner pour tout continent
     tableProjection = projection_table((tablePays,0,len(tablePays)),1,2) if proj==1 else tablePays ## On récupère les colonnes pays et continent du tablePays si proj est 1 sinon, on y assigne la table demandé en argument de la fonction
     newTable = [tableProjection[i] for i in range(len(tableProjection)) if tableProjection[i][1] == continent] ## On récupère dans tableProjection les noms des pays se trouvant sur le continant donné en argument
-    return newTable ## On retourne newTable, qui contient à présent tout les pays du continent continent
+    return projection_table((newTable, 0, len(newTable)), 0) ## On retourne newTable, qui contient à présent tout les pays du continent continent
     
 # afficher_table(exo2(tablePays, "South America", 1),0,10)
 # print(len(exo2(tablePays, "South America", 1)))#14
