@@ -476,10 +476,5 @@ def exo28():
     T5 = list(filter(lambda elt : (elt[1],) in projection_table((T4, 0, len(T4)), 0), projection_table((tableVilles, 0, len(tableVilles)), 1, 2))) ## On recupere les villes de ces pays
     return projection_table((T5, 0, len(T5)), 0) ## On renvoie la table des villes
 
-<<<<<<< HEAD
-# afficher_table(exo_28(), 0, 10)
-# print(len(exo_28()))#106#+100
-=======
 # afficher_table(exo28(), 0, 10)
 # print(len(exo28()))#106#+100
->>>>>>> 510e604602d32def546fd66a3a16dcf8737a69cb
