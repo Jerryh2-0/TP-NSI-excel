@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from data import data
+# import tkinter
+
 import codecs ## On importe codecs qui permet de lire un fichier en spécifiant l'encondage
 import pprint ## On importe ppprint qui permet d'afficher des listes efficacement
 import csv ## On importe csv qui permet de lire les fichiers .csv
@@ -478,3 +481,8 @@ def exo28():
 
 # afficher_table(exo28(), 0, 10)
 # print(len(exo28()))#106#+100
+
+for exercise in data:
+    print(exercise['question'].center(88, '-'))
+    for i in exercise['answer']:
+        exec(i)
