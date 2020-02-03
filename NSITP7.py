@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from data import data
-# import tkinter
+import tkinter as tk
+
+root = tk.Tk() ## On setup tkinter
 
 import codecs ## On importe codecs qui permet de lire un fichier en spécifiant l'encondage
 import pprint ## On importe ppprint qui permet d'afficher des listes efficacement
@@ -45,6 +47,7 @@ def afficher_table(*args): ## On crée la fonction afficher_table qui prend en a
         forme+="|{:"+str(elt)+"}" ## On va ajouter à la forme de la ligne ce mot, comme il s'agit du mot de longueur maximal, les autres mots rentreront
     forme+="|" ## On ferme la colonne
 
+    affichage = ""
 
     for val in Table: ## Pour toutes les valeurs de la table
         trait="  " ## On va créer le trait qui sépare des valeurs précédentes
@@ -52,8 +55,12 @@ def afficher_table(*args): ## On crée la fonction afficher_table qui prend en a
             trait+="+"+"-"*elt
         trait+="+"
         print(trait) ## Pour chaque valeur, on print un trait de séparation avec la valeur d'avant
+        affichage += trait + '\n'
         print (forme.format(*val)) ## et on print la forme définie précédemment en remplacant le mot par l'élément correspondant
+        affichage += forme.format(*val) + '\n'
     print(trait) ## On print un trait pour fermer le tableau
+    affichage += trait + '\n'
+    return affichage
 
 # afficher_table(tableVilles,0,3) ## Trois lignes sont affichées
 
@@ -482,7 +489,19 @@ def exo28():
 # afficher_table(exo28(), 0, 10)
 # print(len(exo28()))#106#+100
 
+canvas = tk.Canvas(root, height=700, width=700, bg='#2E2E2E')
+canvas.pack()
+
+frame = tk.Frame(root, bg='white')
+frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
+
 for exercise in data:
-    print(exercise['question'].center(88, '-'))
+    label = tk.Label(frame, text=exercise['question'])
+    label.pack()
     for i in exercise['answer']:
-        exec(i)
+        label = tk.Label(frame, text=exec(i))
+        label.pack()
+
+# print(afficher_table(exo28(), 0, 10))
+
+root.mainloop()
