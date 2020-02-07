@@ -207,7 +207,7 @@ for item in dir(function):
 
 # print([item for item in dir(function) if not item.startswith("__")])
 
-texte2display = []
+text2display = []
 
 for exercise in data:
     exo = {
@@ -217,6 +217,6 @@ for exercise in data:
         exec("tempSto = " + i)
         if 'answer' in exo.keys(): exo["answer"].append(tempSto)
         else : exo['answer'] = [tempSto]
-        print(exo)
+    text2display.append(exo)
 
-# print(dir(globals()))
+# print(text2display)
