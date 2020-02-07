@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from data import data
-import tkinter as tk
-
-root = tk.Tk() ## On setup tkinter
-
 import codecs ## On importe codecs qui permet de lire un fichier en spécifiant l'encondage
 import pprint ## On importe ppprint qui permet d'afficher des listes efficacement
 import csv ## On importe csv qui permet de lire les fichiers .csv
@@ -488,20 +483,3 @@ def exo28():
 
 # afficher_table(exo28(), 0, 10)
 # print(len(exo28()))#106#+100
-
-canvas = tk.Canvas(root, height=700, width=700, bg='#2E2E2E')
-canvas.pack()
-
-frame = tk.Frame(root, bg='white')
-frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
-
-for exercise in data:
-    label = tk.Label(frame, text=exercise['question'])
-    label.pack()
-    for i in exercise['answer']:
-        label = tk.Label(frame, text=exec(i))
-        label.pack()
-
-# print(afficher_table(exo28(), 0, 10))
-
-root.mainloop()
