@@ -1,42 +1,56 @@
 import tkinter as tk
+from tkinter import ttk
 
 from core import text2display as txtList
 
-root = tk.Tk()
+
 selectedEx = 0
 
+root = tk.Tk()
+container = ttk.Frame(root)
+canvas = tk.Canvas(container)
+scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+scrollable_frame = ttk.Frame(canvas)
 
-canvas = tk.Canvas(root, height=700, width=700)
+scrollable_frame.bind(
+    "<Configure>",
+    lambda e: canvas.configure(
+        scrollregion=canvas.bbox("all")
+    )
+)
 
-
-frame = tk.Frame(root, bg="white")
-
-scrollbar = tk.Scrollbar(frame)
-scrollbar.pack(side=tk.RIGHT, fill="y")
+canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
 
 canvas.configure(yscrollcommand=scrollbar.set)
-canvas.pack(side=tk.LEFT)
-frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
+
 
 def select(index):
     selectedEx = index
     buttons=[]
-    for widget in frame.winfo_children():
+    for widget in scrollable_frame.winfo_children():
         widget.destroy()
     for exercise in txtList:
         callback = lambda n : lambda : select(n)
-        button = tk.Button(frame, text=exercise['question'], command=callback(txtList.index(exercise)))
+        button = tk.Button(scrollable_frame, text=exercise['question'], command=callback(txtList.index(exercise)))
         button.pack()
         if txtList.index(exercise)  == selectedEx:
-            print(selectedEx)
             for answer in exercise['answer']:
-                label = tk.Label(frame, text=answer)
+                label = tk.Label(scrollable_frame, text=answer)
                 label.pack()
+
 
 buttons=[]
 for exercise in txtList:
     callback = lambda n : lambda : select(n)
-    button = tk.Button(frame, text=exercise['question'], command=callback(txtList.index(exercise)))
+    button = tk.Button(scrollable_frame, text=exercise['question'], command=callback(txtList.index(exercise)))
     button.pack()
+
+container.pack(fill="both", expand=True, padx=20, pady=20)
+canvas.pack(side="left", fill="both", expand=True)
+# canvas.pack(fill="both", expand=True, padx=20, pady=20)
+# scrollable_frame.pack(in_=canvas,anchor="c", relx=.5, rely=.5)
+scrollbar.pack(side="right", fill="y")
+
+root.attributes('-fullscreen', True)
 
 root.mainloop()
