@@ -198,14 +198,8 @@ c = 0
 for item in dir(function):
     c += 1
     if not item.startswith("__"):
-        # exec(f'global {item}')
         exec(f'{item} = function.{item}')
         print(f'loaded {item}')
-        # if c== 1 : break
-        # exec(f'{item} = function.{item}')
-        # print(dir(globals()[item]))
-
-# print([item for item in dir(function) if not item.startswith("__")])
 
 text2display = []
 
@@ -219,4 +213,5 @@ for exercise in data:
         else : exo['answer'] = [tempSto]
     text2display.append(exo)
 
-# print(text2display)
+if __name__ == "__main__":
+    print("Ceci n'est pas le fichier principal. Vous pouvez accéder à l'interface graphique grâce au fichier GUI.py ou aux fonctions de base du fichier NSITP7.py")

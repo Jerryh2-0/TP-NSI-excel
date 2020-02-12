@@ -483,3 +483,7 @@ def exo28():
 
 # afficher_table(exo28(), 0, 10)
 # print(len(exo28()))#106#+100
+
+
+if __name__ == "__main__":
+    print("\n\tVous pouvez accéder à l'interface graphique via GUI.py présent dans ce même dossier\n")

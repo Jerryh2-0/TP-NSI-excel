@@ -47,8 +47,6 @@ for exercise in txtList:
 
 container.pack(fill="both", expand=True, padx=20, pady=20)
 canvas.pack(side="left", fill="both", expand=True)
-# canvas.pack(fill="both", expand=True, padx=20, pady=20)
-# scrollable_frame.pack(in_=canvas,anchor="c", relx=.5, rely=.5)
 scrollbar.pack(side="right", fill="y")
 
 root.attributes('-fullscreen', True)
