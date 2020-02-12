@@ -14,7 +14,7 @@ tableVilles=charger_table("villes.csv") ## On récupère la modalisation de vill
 tableLangues=charger_table("langues.csv") ## On récupère la modalisation de langues.csv et on la stocke dans tableLangues
 #print(tableVilles[0]) ## A compléter
 
-def afficher_table(*args): ## On crée la fonction afficher_table qui prend en argument une table et potentiellement le début de la table affichée, par défaut 0 et la fin de la table, par défaut None. Il permettra de créer une nouvelle table, plus petite que la précédente qui commence à la ligne args[1] et finit à la ligne args[2] si spécifiés
+def afficher_table(*args, reqPrint=True): ## On crée la fonction afficher_table qui prend en argument une table et potentiellement le début de la table affichée, par défaut 0 et la fin de la table, par défaut None. Il permettra de créer une nouvelle table, plus petite que la précédente qui commence à la ligne args[1] et finit à la ligne args[2] si spécifiés
 
     Table=args[0] ## On récupère dans les arguments la table passée, il s'agit du premier argument
     if len(args)==1: ## S'il n'y a qu'un argument (la table) on définit le début comme étant 0 et la fin, la longueur de la table, ce qui correspond au fait que quand aucun début et aucune fin n'est renseignée, la table s'affiche en entier
@@ -49,11 +49,11 @@ def afficher_table(*args): ## On crée la fonction afficher_table qui prend en a
         for elt in ValeursMax:
             trait+="+"+"-"*elt
         trait+="+"
-        print(trait) ## Pour chaque valeur, on print un trait de séparation avec la valeur d'avant
+        if reqPrint : print(trait) ## Pour chaque valeur, on print un trait de séparation avec la valeur d'avant
         affichage += trait + '\n'
-        print (forme.format(*val)) ## et on print la forme définie précédemment en remplacant le mot par l'élément correspondant
+        if reqPrint : print (forme.format(*val)) ## et on print la forme définie précédemment en remplacant le mot par l'élément correspondant
         affichage += forme.format(*val) + '\n'
-    print(trait) ## On print un trait pour fermer le tableau
+    if reqPrint : print(trait) ## On print un trait pour fermer le tableau
     affichage += trait + '\n'
     return affichage
 
