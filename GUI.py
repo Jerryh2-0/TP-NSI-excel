@@ -7,7 +7,8 @@ from core import text2display as txtList
 selectedEx = 0
 
 root = tk.Tk()
-container = ttk.Frame(root)
+
+container = tk.Frame(root)
 canvas = tk.Canvas(container)
 scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
 scrollable_frame = ttk.Frame(canvas)
@@ -33,6 +34,7 @@ def select(index):
         callback = lambda n : lambda : select(n)
         button = tk.Button(scrollable_frame, text=exercise['question'], command=callback(txtList.index(exercise)))
         button.pack()
+        button.config(width=200)
         if txtList.index(exercise)  == selectedEx:
             for answer in exercise['answer']:
                 label = tk.Label(scrollable_frame, text=answer)
@@ -44,6 +46,7 @@ for exercise in txtList:
     callback = lambda n : lambda : select(n)
     button = tk.Button(scrollable_frame, text=exercise['question'], command=callback(txtList.index(exercise)))
     button.pack()
+    button.config(width=200)
 
 container.pack(fill="both", expand=True, padx=20, pady=20)
 canvas.pack(side="left", fill="both", expand=True)
