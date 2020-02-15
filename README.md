@@ -1,2 +1,2 @@
 # TP-NSI-excel
-Projet de NSI concernant les tables .csv
+Little school project about .csv files (excel)
